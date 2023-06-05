@@ -35,7 +35,9 @@ class WebPageTester(unittest.TestCase):
         print('\n')
         # self.callendar()
         print('\n')
-        self.login()
+        # self.login()
+        print('\nd')
+        self.register()
         print('\n')
         time.sleep(15)
         self.driver.quit()
@@ -360,6 +362,71 @@ class WebPageTester(unittest.TestCase):
         expected_text = 'The existing username and/or password you submitted are not valid'
         self.assertEqual(received_text.text, expected_text)
         print('\tLogin is working properly')
+
+    def register(self):
+        print('\t\t\tTESTING REGISTER', end='\n\n')
+
+        try:
+            self.driver.get('https://calendar.ucsd.edu/pages/add-event')
+            print('\tLoaded register page')
+            # trying to register
+            print('\tTrying to register')
+            user_name_textbox = self.driver.find_element(By.XPATH, '//*[@id="first_name"]')
+            print('\tFound first name textbox')
+            user_name_textbox.send_keys('test')
+            print('\tSent first name')
+            user_name_textbox = self.driver.find_element(By.XPATH, '//*[@id="last_name"]')
+            print('\tFound last name textbox')
+            user_name_textbox.send_keys('test')
+            print('\tSent last name')
+            user_name_textbox = self.driver.find_element(By.XPATH, '//*[@id="email"]')
+            print('\tFound email textbox')
+            user_name_textbox.send_keys('test')
+            print('\tSent email')
+            dept_org = self.driver.find_element(By.XPATH, '//*[@id="dept"]')
+            print('\tFound department/organization textbox')
+            dept_org.send_keys('test')
+            print('\tSent department/organization')
+            mail_code = self.driver.find_element(By.XPATH, '//*[@id="mail_code"]')
+            print('\tFound mail code textbox')
+            mail_code.send_keys('test')
+            print('\tSent mail code')
+            phone = self.driver.find_element(By.XPATH, '//*[@id="phone"]')
+            print('\tFound phone textbox')
+            phone.send_keys('test')
+            print('\tSent phone')
+            user_name_textbox = self.driver.find_element(By.XPATH, '//*[@id="username"]')
+            print('\tFound username textbox')
+            user_name_textbox.send_keys('test')
+            print('\tSent username')
+            password_textbox = self.driver.find_element(By.XPATH, '//*[@id="password"]')
+            print('\tFound password textbox')
+            password_textbox.send_keys('test')
+            print('\tSent password')
+            password_textbox = self.driver.find_element(By.XPATH, '//*[@id="password_confirm"]')
+            print('\tFound confirm password textbox')
+            password_textbox.send_keys('test')
+            print('\tSent confirm password')
+
+            submit_button = self.driver.find_element(By.XPATH, '//*[@id="submitAddEvent"]')
+            print('\tFound submit button')
+            submit_button.click()
+            print('\tClicked on submit button')
+
+            # the data is not valid, it should not change links!
+            expected_link = 'https://calendar.ucsd.edu/pages/add-event'
+            current_link = self.driver.current_url
+            self.assertEqual(current_link, expected_link)
+            print('\tRegister is working properly')
+        except:
+            print('\tError on register')
+
+
+
+
+
+                                    
+
 
 
 
