@@ -22,9 +22,9 @@ class WebPageTester(unittest.TestCase):
         print('\n')
         self.buttons()
         print('\n')
-        self.video()
+        self.videos()
         print('\n')
-        self.search_box()
+        self.search_boxes()
         time.sleep(15)
         self.driver.quit()
 
@@ -119,12 +119,13 @@ class WebPageTester(unittest.TestCase):
         except:
             print("\tError on button 2")
 
-    def video(self):
-        
+    def videos(self):
+        print("\t\t\tTESTING VIDEOS", end='\n\n')
+
+        print('\t\tVideo 1')
         try:
             self.driver.get('https://ucsd.edu/')
             # testing video
-            print("\t\t\tTESTING VIDEO", end='\n\n')
             video_button = self.driver.find_element(By.XPATH, '//*[@id="a-main"]/section[1]/div/div/div[1]/p[2]/a')
             print('\tFound video button')
             video_button.click()
@@ -137,7 +138,16 @@ class WebPageTester(unittest.TestCase):
         except:
             print("\tError on video")
 
-    def search_box(self):
+        print('\n\t\tVideo 2')
+        self.driver.get('https://campaign.ucsd.edu/')
+        # clicking on video button
+        video_button = self.driver.find_element(By.XPATH, '//*[@id="banner-part"]/div/div/a')
+        print('\tFound video button')
+        video_button.click()
+        print('\tClicked video button')
+        print('\tVideo is working properly')
+
+    def search_boxes(self):
         print("\t\t\tTESTING SEARCH BOX", end='\n\n')
         print("\t\t Testing blink mode")
         try:
