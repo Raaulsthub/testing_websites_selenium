@@ -33,7 +33,9 @@ class WebPageTester(unittest.TestCase):
         print('\n')
         # self.image_sliders()
         print('\n')
-        self.callendar()
+        # self.callendar()
+        print('\n')
+        self.login()
         print('\n')
         time.sleep(15)
         self.driver.quit()
@@ -326,7 +328,43 @@ class WebPageTester(unittest.TestCase):
         except:
             print("\tError on callendar")
 
+    def login(self):
+        print("\t\t\tTESTING LOGIN", end='\n\n')
+        self.driver.get('https://calendar.ucsd.edu/search/by-date/2023/06/14/')
+        login_button = self.driver.find_element(By.XPATH, '//*[@id="widget-sidebar"]/section[6]/a/div')
+        print('\tFound login button')
+        login_button.click()
+        print('\tClicked on login button')
+        expected_link = 'https://calendar.ucsd.edu/pages/user-entries'
+        current_link = self.driver.current_url
+        self.assertEqual(current_link, expected_link)
+        print('\tLogin button is working properly')
+        print('\tTrying to login')
+        user_name_textbox = self.driver.find_element(By.XPATH, '//*[@id="calendar-main"]/div/div/form/section/div[1]/input')
+        print('\tFound username textbox')
+        user_name_textbox.send_keys('test')
+        print('\tSent username')
+        password_textbox = self.driver.find_element(By.XPATH, '//*[@id="calendar-main"]/div/div/form/section/div[2]/input')
+        print('\tFound password textbox')
+        password_textbox.send_keys('test')
+        print('\tSent password')
 
+        login_button = self.driver.find_element(By.XPATH, '//*[@id="calendar-main"]/div/div/form/section/div[3]/input')
+        print('\tFound login button')
+        login_button.click()
+        print('\tClicked on login button')
+
+        # did it log in? it should not
+        received_text = self.driver.find_element(By.XPATH, '//*[@id="content"]/ul/li')
+        print('\tReceived: ' + received_text.text)
+        expected_text = 'The existing username and/or password you submitted are not valid'
+        self.assertEqual(received_text.text, expected_text)
+        print('\tLogin is working properly')
+
+
+
+
+            
 
 
 
