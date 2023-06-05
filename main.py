@@ -36,11 +36,15 @@ class WebPageTester(unittest.TestCase):
         self.callendar()
         print('\n')
         self.login()
-        print('\nd')
+        print('\n')
         self.register()
+        print('\n')
+        self.scholarship()
         print('\n')
         time.sleep(15)
         self.driver.quit()
+
+    # separate element testing
 
     def load_driver(self):
         print('\tLoading driver')
@@ -421,17 +425,50 @@ class WebPageTester(unittest.TestCase):
         except:
             print('\tError on register')
 
+    # long tests
+    def scholarship(self):
+        # testing several times (repeated test)
+        print('\t\t\tTESTING NAVIGATION TIME (SCHOLARSHIP)', end='\n\n')
+        total_time = 0
+        for i in range(10):
+            print('\tTest #' + str(i + 1))
+            current_time = time.time()
+            self.driver.get('https://ucsd.edu/')
+            print('\tLoaded UCSD page')
+            time.sleep(2)
+            button1 = self.driver.find_element(By.XPATH, '//*[@id="a-main"]/section[5]/div[3]/div/div/p[2]/a')
+            print('\tFound scholarship button')
+            button1.click()
+            print('\tClicked on scholarship and finantial aid button')
+            button2 = self.driver.find_element(By.XPATH, '//*[@id="navbar"]/ul[1]/li[4]/a')
+            print('\tFound types button')
+            button2.click()
+            print('\tClicked on types button')
+            button3 = self.driver.find_element(By.XPATH, '//*[@id="main-content"]/div/div[4]/section/div/div[2]/div[1]/div/div/h3/a')
+            print('\tFound scholarship button')
+            button3.click()
+            print('\tClicked on scholarship button')
+            button4 = self.driver.find_element(By.XPATH, '//*[@id="main-content"]/div/div[4]/section/div/div[1]/div[1]/div/div/div/h3/a')
+            print('\tFound entering first year button')
+            button4.click()
+            print('\tClicked on entering first year button')
+            print('\tGot to this test\'s final informative page')
+
+            time_taken = time.time() - current_time
+
+            if (time_taken > 10.0):
+                print('\tNavigation time is too long: ' + str(time_taken) + ' seconds')
+            else:
+                print('\tNavigation time is acceptable: ' + str(time_taken) + ' seconds')
+
+            total_time += time_taken
+            print('\n')
+        
+        print('\tAverage navigation time: ' + str(total_time / 10) + ' seconds')
 
 
 
 
-                                    
-
-
-
-
-
-            
 
 
 
