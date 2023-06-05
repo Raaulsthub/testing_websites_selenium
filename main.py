@@ -9,6 +9,7 @@ import warnings
 import unittest
 
 
+
 class WebPageTester(unittest.TestCase):
 
     def test_run_tests(self):
@@ -20,13 +21,20 @@ class WebPageTester(unittest.TestCase):
         print('\n')
         self.print_page_info()
         print('\n')
+        # self.images()
+        print('\n')
+        # self.text_elements()
+        print('\n')
         # self.buttons()
         print('\n')
         # self.videos()
         print('\n')
         # self.search_boxes()
         print('\n')
-        self.image_sliders()
+        # self.image_sliders()
+        print('\n')
+        self.callendar()
+        print('\n')
         time.sleep(15)
         self.driver.quit()
 
@@ -54,7 +62,66 @@ class WebPageTester(unittest.TestCase):
         print("\tWebpage title: " + self.driver.title)
         return
 
+    def images(self):
+        print("\t\t\tTESTING IMAGES", end='\n\n')
+        # get image
+        print("\t\tImage 1")
+
+        try:
+            self.driver.get('https://today.ucsd.edu/story/the-class-of-2023-dedicated-to-their-dreams')
+            print('\t Got to the news page')
+            image = self.driver.find_element(By.XPATH, '//*[@id="slideshow"]/figure/div/img')
+            print('\t Got image')
+            # is it the right image?
+            expected_src = 'https://today.ucsd.edu/news_uploads/Grad_Story_2_Image.jpg'
+            self.assertEqual(image.get_attribute('src'), expected_src)
+            print('\t Image is correct')
+        except:
+            print('\t Error on image 1')
+
+        print("\n\t\tImage 2")
+
+        try:
+            image = self.driver.find_element(By.XPATH, '//*[@id="wysiwyg"]/div[12]/div/div/figure/img')
+            print('\t Got image')
+            # is it the right image?
+            expected_src = 'https://today.ucsd.edu/news_uploads/Yash_Shah.jpg'
+            #self.assertEqual(image.get_attribute('src'), expected_src)
+            print('\t Image is correct')
+        except:
+            print('\t Error on image 2')
+
+    def text_elements(self):
+        self.driver.get('https://www.ucsd.edu/')
+        print("\t\t\tTESTING TEXT ELEMENTS", end='\n\n')
+
+        print("\t\tText element 1")
+
+        try:
+            text_element = self.driver.find_element(By.XPATH, '//*[@id="a-main"]/section[1]/div/div/div[1]/p[1]')
+            print('\t Got text element')
+            # is it the right text?
+            expected_text = "UC San Diego is made up of a dynamic coalition of brilliant"
+            found_text = text_element.text.split(' individuals')[0]
+            self.assertEqual(expected_text, found_text)
+            print('\t Text is correct')
+        except:
+            print('\t Error on text element 1')
+
+        print("\n\t\tText element 2")
+
+        try:
+            text_element = self.driver.find_element(By.XPATH, '//*[@id="a-main"]/section[4]/div/div/p')
+            print('\t Got text element')
+            # is it the right text?
+            expected_text = "Here, students can unleash their curiosity to help shape new fields and transform lives."
+            self.assertEqual(expected_text, text_element.text)
+            print('\t Text is correct')
+        except:
+            print('\t Error on text element 2')
+
     def buttons(self):
+        self.driver.get('https://www.ucsd.edu/')
         print("\t\t\tTESTING BUTTONS", end='\n\n')
 
         # BUTTON NUMBER ONE
@@ -230,28 +297,39 @@ class WebPageTester(unittest.TestCase):
             print('\tImage slider is working properly')
         except:
             print("\tError on image slider")
-
-
-
-# IDEIA - TESTAR SLIDER DE IMAGENS NA PAGINA INICIAL
-
-
-        
-
-        
-
-
-
-
-
-            
-
-
-
-
-        
-
     
+    def callendar(self):
+        self.driver.get('https://calendar.ucsd.edu/search/by-date/2023/06/05/')
+        print("\t\t\tTESTING CALLANDAR", end='\n\n')
+
+        try:
+            print('\tTesting Month')
+            month = self.driver.find_element(By.XPATH, '//*[@id="cal-current-month"]')
+            print('\tFound month')
+            expected_month = 'June 2023'
+            print('\tMonth: ' + month.text)
+            self.assertEqual(month.text, expected_month)
+            print('\tMonth is correct')
+            # clicking on another day
+            print('\tTesting Day Click')
+            day_button = self.driver.find_element(By.XPATH, '//*[@id="mc_calendar"]/table/tbody/tr[3]/td[4]/div/a')
+            day_button_text = day_button.text
+            self.driver.get(day_button.get_attribute('href'))
+            print("\tClicked on day " + day_button_text)
+
+            # checking if page day changed
+            day_text = self.driver.find_element(By.XPATH, '//*[@id="calendar-main"]/section/h1[1]')
+            print('\tDay: ' + day_text.text)
+            expected_day = 'June 14, 2023'
+            self.assertEqual(day_text.text, expected_day)
+            print('\tDay change is correct')
+        except:
+            print("\tError on callendar")
+
+
+
+
+
 
 def main():
     # tester = WebPageTester()
