@@ -20,11 +20,13 @@ class WebPageTester(unittest.TestCase):
         print('\n')
         self.print_page_info()
         print('\n')
-        self.buttons()
+        # self.buttons()
         print('\n')
-        self.videos()
+        # self.videos()
         print('\n')
-        self.search_boxes()
+        # self.search_boxes()
+        print('\n')
+        self.image_sliders()
         time.sleep(15)
         self.driver.quit()
 
@@ -202,9 +204,36 @@ class WebPageTester(unittest.TestCase):
         except:
             print("\tError on search box (faculty and staff mode)")
 
+    def image_sliders(self):
+        print("\t\t\tTESTING IMAGE SLIDERS", end='\n\n')
+        try:
+            # testing image slider 1
+            self.driver.get('https://ucsd.edu/') # geting to first page
+            image_slider = self.driver.find_element(By.XPATH, '//*[@id="a-main"]/div[2]/div/div/div[2]/ul/a[2]') # get image slider
+            print('\tFound image slider')
+            image = self.driver.find_element(By.XPATH, '//*[@id="a-main"]/div[2]/div/div/div[2]/ul/div/div/li[2]/div[1]')# get associated image
+            print('\tFound image')
+            expected_style = 'background-image: url("_images/about/economic-impact-report/img-stats-top-ten.jpg");' # is it the right image?
+            image_style = image.get_attribute('style')
+            self.assertEqual(image_style, expected_style)
+            print('\tFirst image is the correct one')
+            image_slider.click() # click on image slider
+            print("\tClicked on image slider")
+            # get associated image
+            image = self.driver.find_element(By.XPATH, '//*[@id="a-main"]/div[2]/div/div/div[2]/ul/div/div/li[3]/div[1]')
+            print('\tFound image')
+            # print image style
+            expected_style = 'background-image: url("_images/about/economic-impact-report/img-stats-number-one-public-service.jpg");'
+            image_style = image.get_attribute('style')
+            self.assertEqual(image_style, expected_style)
+            print('\tSecond image is the correct one')
+            print('\tImage slider is working properly')
+        except:
+            print("\tError on image slider")
 
 
-        
+
+# IDEIA - TESTAR SLIDER DE IMAGENS NA PAGINA INICIAL
 
 
         
