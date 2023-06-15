@@ -37,8 +37,7 @@ class WebPageTester(unittest.TestCase):
         print("\tWebpage URL: " + driver.current_url)
         # print page title
         print("\tWebpage title: " + driver.title)
-        driver.quit()
-        
+        driver.quit()        
 
     def test_images(self):
         driver = webdriver.Chrome(ChromeDriverManager().install())
